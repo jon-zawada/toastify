@@ -7,6 +7,28 @@
   position: relative;
   width: 100%;
   cursor: pointer;
+  transform: translateX(110%);
+  transition: transform 300ms ease-in-out;
+}
+
+.toast-container[data-position$="-right"] .toast {
+  transform: translateX(110%);
+}
+
+.toast-container[data-position$="-left"] .toast {
+  transform: translateX(-110%);
+}
+
+.toast-container[data-position$="top-center"] .toast {
+  transform: translateY(-110vh);
+}
+
+.toast-container[data-position$="bottom-center"] .toast {
+  transform: translateY(110vh);
+}
+
+.toast-container .toast.show {
+  transform: translate(0, 0);
 }
 
 .toast.can-close::after {

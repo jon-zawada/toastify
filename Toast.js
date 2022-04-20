@@ -13,6 +13,9 @@ class Toast {
   constructor(options){
     this.#toastElem = document.createElement("div");
     this.#toastElem.classList.add("toast");
+    requestAnimationFrame(() => {
+      this.#toastElem.classList.add("show");
+    });
     this.#removeBinded = this.remove.bind(this);
     this.update({...DEFAULT_OPTIONS, ...options});
   }
@@ -26,8 +29,8 @@ set autoClose(value) {
 }
 
 set position(value) {
-  const currentContainer = this.#toastElem.parentElement
-  const selector = `toast-container[data-position=${value}]`;
+  const currentContainer = this.#toastElem.parentElement;
+  const selector = `.toast-container[data-position=${value}]`;
   const container = document.querySelector(selector) || createContainer(value);
   container.append(this.#toastElem);
   if(currentContainer == null || currentContainer.hasChildNodes()) {
@@ -60,7 +63,7 @@ set position(value) {
     const container = this.#toastElem.parentElement;
     this.#toastElem.remove();
     this.onClose();
-    if(container.hasChildNodes()) {
+    if(container == null || container.hasChildNodes()) {
       return;
     } else {
       container.remove();

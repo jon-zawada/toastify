@@ -1,3 +1,10 @@
 import Toast from './Toast.js';
 
-const toast = new Toast({ text: "titties", onClose: () => {console.log('bye')}});
+const positions = ["top-center", "top-right", "top-left", "bottom-right", "bottom-left", "bottom-center"];
+function getRandom() {
+  return positions[Math.floor(Math.random() * 6)];
+}
+document.querySelector("button").addEventListener("click", () => {
+  const toast = new Toast({ text: "titties", position: getRandom()});
+});
+
