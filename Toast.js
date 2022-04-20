@@ -1,17 +1,20 @@
 const DEFAULT_OPTIONS = {
   autoClose: 5000,
-  position: "top-center"
+  position: "top-center",
+  onClose: () => {},
+  canClose: true,
 }
 
 class Toast {
   #toastElem
   #autoCloseTimeout
+  #onClose
+  #removeBinded
   constructor(options){
     this.#toastElem = document.createElement("div");
     this.#toastElem.classList.add("toast");
-    Object.entries({...DEFAULT_OPTIONS, ...options}).forEach(([key, value]) => {
-      this[key] = value;
-    })
+    this.#removeBinded = this.remove.bind(this);
+    this.update({...DEFAULT_OPTIONS, ...options});
   }
 
 set autoClose(value) {
@@ -23,20 +26,40 @@ set autoClose(value) {
 }
 
 set position(value) {
+  const currentContainer = this.#toastElem.parentElement
   const selector = `toast-container[data-position=${value}]`;
   const container = document.querySelector(selector) || createContainer(value);
-  container.append(this.#toastElem)
+  container.append(this.#toastElem);
+  if(currentContainer == null || currentContainer.hasChildNodes()) {
+    return;
+  } else {
+    currentContainer.remove();
+  }
 }
 
-set text (text) {
-  this.#toastElem.textContent = text;
-}
+  set text (text) {
+    this.#toastElem.textContent = text;
+  }
 
+  set canClose(value) {
+    this.#toastElem.classList.toggle("can-close", value);
+    if(value) {
+      this.#toastElem.addEventListener("click", this.#removeBinded);
+    } else {
+      this.#toastElem.removeEventListener("click", this.#removeBinded);
+    }
+  }
 
-  update () {}
+  update (options) {
+    Object.entries(options).forEach(([key, value]) => {
+      this[key] = value;
+    });
+  }
+
   remove () {
     const container = this.#toastElem.parentElement;
     this.#toastElem.remove();
+    this.onClose();
     if(container.hasChildNodes()) {
       return;
     } else {
