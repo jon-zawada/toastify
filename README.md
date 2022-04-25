@@ -4,7 +4,6 @@ Joastify is a toast message library displaying toast messages on your javascript
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
 
 ```bash
 npm i joastify
