@@ -9,9 +9,7 @@ const DEFAULT_OPTIONS = {
 class Toast {
   #toastElem
   #autoCloseTimeout
-  #onClose
   #removeBinded
-  #timeVisible = 0;
   #autoClose
   #visibleSince
   #progressInterval
@@ -105,6 +103,5 @@ function createContainer(position) {
   document.body.append(container);
   return container;
 }
-// new Toast({position: "top-right"});
 
 export default Toast;
