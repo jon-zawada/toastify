@@ -9,6 +9,7 @@
   cursor: pointer;
   transform: translateX(110%);
   transition: transform 300ms ease-in-out;
+  overflow: hidden;
 }
 
 .toast-container[data-position$="-right"] .toast {
@@ -29,6 +30,18 @@
 
 .toast-container .toast.show {
   transform: translate(0, 0);
+}
+
+.toast.progress::before{
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: calc(100% * var(--progress, .5));
+  background-color: blue;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin-right: auto;
 }
 
 .toast.can-close::after {
